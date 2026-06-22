@@ -17,9 +17,9 @@ pipeline {
                     
                     bat 'databricks workspace mkdirs /Shared/CI-CD'
                     
-                    // FIXED: Naye CLI version ke hisaab se commands update kar diye
-                    bat 'databricks workspace import /Shared/CI-CD/app.py --file app.py --overwrite'
-                    bat 'databricks workspace import /Shared/CI-CD/requirements.txt --file requirements.txt --overwrite'
+                    // FIXED: Added '--format AUTO' so Databricks doesn't think it's a zip file
+                    bat 'databricks workspace import /Shared/CI-CD/app.py --file app.py --format AUTO --overwrite'
+                    bat 'databricks workspace import /Shared/CI-CD/requirements.txt --file requirements.txt --format AUTO --overwrite'
                     
                     echo 'Deployment Successful! Files are now in Databricks.'
                 }
