@@ -8,20 +8,21 @@ pipeline {
             }
         }
 
-        stage('Deploy to Databricks') {
+        stage('Deploy Full Project to Databricks') {
             steps {
                 withCredentials([
                     string(credentialsId: 'DATABRICKS_HOST', variable: 'DATABRICKS_HOST'),
                     string(credentialsId: 'DATABRICKS_TOKEN', variable: 'DATABRICKS_TOKEN')
                 ]) {
                     
-                    bat 'databricks workspace mkdirs /Shared/CI-CD'
+                    // 1. Create a new main folder for the whole project
+                    bat 'databricks workspace mkdirs /Shared/banklens-platform2'
                     
-                    // FIXED: Added '--format AUTO' so Databricks doesn't think it's a zip file
-                    bat 'databricks workspace import /Shared/CI-CD/app.py --file app.py --format AUTO --overwrite'
-                    bat 'databricks workspace import /Shared/CI-CD/requirements.txt --file requirements.txt --format AUTO --overwrite'
+                    // 2. Sync the ENTIRE repository (.) into that Databricks folder
+                    // Note: We add /Workspace at the front because the 'sync' command requires it
+                    bat 'databricks sync . /Workspace/Shared/banklens-platform2'
                     
-                    echo 'Deployment Successful! Files are now in Databricks.'
+                    echo 'Full Banklens Platform Deployment Successful!'
                 }
             }
         }
