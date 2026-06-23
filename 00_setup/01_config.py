@@ -1,5 +1,5 @@
 CATALOG_NAME = "banklens"
-# This is a full-line comment
+# This is a full-line comment!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 BRONZE_SCHEMA = "bronze"
 SILVER_SCHEMA = "silver"
 GOLD_SCHEMA = "gold"
